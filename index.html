@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<!-- =====================================================================
+     ABERTURA DO <head>
+     ===================================================================== -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotas do Vazio | Guia de Speedrun de Hollow Knight</title>
+  <meta name="description" content="Guia de rotas, skips e estratégias de speedrun para Hollow Knight.">
+
+  <!-- Fontes (têm fallback caso não carreguem) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- =================================================================
+       1) INICIALIZAÇÃO DO dataLayer
+       Deve vir ANTES do snippet do GTM, para que eventos disparados
+       antes do carregamento do GTM não se percam.
+       ================================================================= -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+  </script>
+
+  <!-- =================================================================
+       2) >>> INÍCIO DO ESPAÇO RESERVADO: SNIPPET GTM (HEAD) <<<
+       Cole aqui o primeiro snippet do Google Tag Manager:
+
+       <script>(function(w,d,s,l,i){ ... })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+       ================================================================= -->
+
+  <!-- >>> FIM DO ESPAÇO RESERVADO: SNIPPET GTM (HEAD) <<< -->
+
+  <style>
+    /* ===== Design tokens: paleta inspirada em Hallownest ===== */
+    :root {
+      --void: #05070d;        /* fundo: o Vazio */
+      --abyss: #0b1220;       /* superfícies */
+      --deep: #121c2e;        /* cartões */
+      --bone: #ece8dc;        /* texto: casca/osso */
+      --mist: #9aa7ba;        /* texto secundário */
+      --soul: #bfe6ff;        /* brilho de Alma */
+      --soul-dim: #6fa8d6;
+      --line: rgba(191, 230, 255, .18);
+      --font-title: "Cinzel", "Trajan Pro", Georgia, serif;
+      --font-body: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--void); color: var(--bone);
+      font-family: var(--font-body); font-size: 1.2rem; line-height: 1.6;
+    }
+    a { color: var(--soul); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 2px solid var(--soul); outline-offset: 3px; }
+    .wrap { width: min(1080px, 92%); margin-inline: auto; }
+    h1, h2, h3 { font-family: var(--font-title); font-weight: 700; letter-spacing: .04em; line-height: 1.2; }
+
+    /* ===== Botões ===== */
+    .btn {
+      display: inline-block; cursor: pointer; font-family: var(--font-title);
+      font-size: .9rem; letter-spacing: .12em; padding: .85rem 1.6rem;
+      border: 1px solid var(--soul); color: var(--soul); background: transparent;
+      border-radius: 2px; transition: background .2s, color .2s;
+    }
+    .btn:hover { background: var(--soul); color: var(--void); text-decoration: none; }
+    .btn-solid { background: var(--soul); color: var(--void); }
+    .btn-solid:hover { background: var(--bone); border-color: var(--bone); }
+
+    /* ===== Header ===== */
+    .site-header { border-bottom: 1px solid var(--line); background: var(--abyss); position: sticky; top: 0; z-index: 10; }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .9rem; flex-wrap: wrap; }
+    .logo { font-family: var(--font-title); font-size: 1.15rem; letter-spacing: .12em; color: var(--bone); }
+    .nav { display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap; }
+    .nav a:not(.btn) { color: var(--mist); font-size: 1.1rem; }
+    .nav a:not(.btn):hover { color: var(--soul); text-decoration: none; }
+    .nav .btn { padding: .5rem 1rem; font-size: .75rem; }
+
+    /* ===== Hero: único momento "ousado" da página ===== */
+    .hero {
+      text-align: center; padding: 7rem 0 6rem;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 0%, rgba(191, 230, 255, .14), transparent 70%),
+        var(--void);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero h1 { font-size: clamp(2.2rem, 6vw, 4.4rem); margin-bottom: 1.2rem; }
+    .hero p { max-width: 36ch; margin: 0 auto 2.2rem; color: var(--mist); font-size: 1.35rem; }
+    .hero .btn + .btn { margin-left: .8rem; }
+
+    /* ===== Seções ===== */
+    section { padding: 5rem 0; }
+    .section-title { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: .6rem; }
+    .section-lead { color: var(--mist); max-width: 52ch; margin-bottom: 2.6rem; }
+    .grid { display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background: var(--deep); border: 1px solid var(--line); padding: 1.6rem; border-radius: 2px; }
+    .card h3 { font-size: 1.05rem; margin-bottom: .6rem; color: var(--soul); }
+    .card p { color: var(--mist); font-size: 1.1rem; }
+    .card a { display: inline-block; margin-top: .8rem; }
+
+    /* ===== Formulário ===== */
+    .lead-section { background: var(--abyss); border-block: 1px solid var(--line); }
+    .lead-form { display: grid; gap: 1rem; max-width: 520px; }
+    .lead-form label { display: grid; gap: .3rem; font-size: 1.05rem; color: var(--mist); }
+    .lead-form input {
+      font: inherit; color: var(--bone); background: var(--void);
+      border: 1px solid var(--line); padding: .7rem .9rem; border-radius: 2px;
+    }
+    .lead-form input.invalid { border-color: #e58a8a; }
+    .form-msg { min-height: 1.6rem; font-size: 1.05rem; }
+    .form-msg.error { color: #e58a8a; }
+    .form-msg.ok { color: var(--soul); }
+
+    /* ===== Footer ===== */
+    .site-footer { padding: 3rem 0; color: var(--mist); font-size: 1rem; }
+    .site-footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+    @media (max-width: 600px) { .hero { padding: 4.5rem 0 4rem; } .hero .btn + .btn { margin: .8rem 0 0; } }
+  </style>
+</head>
+<!-- =====================================================================
+     FIM DO </head>
+     ===================================================================== -->
+
+<!-- =====================================================================
+     ABERTURA DO <body>
+     ===================================================================== -->
+<body>
+
+  <!-- =================================================================
+       3) >>> INÍCIO DO ESPAÇO RESERVADO: SNIPPET GTM (BODY / noscript) <<<
+       O Google Tag Manager exige o <noscript> imediatamente após a
+       abertura do <body>. Cole aqui:
+
+       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+       ================================================================= -->
+
+  <!-- >>> FIM DO ESPAÇO RESERVADO: SNIPPET GTM (BODY / noscript) <<< -->
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="#topo" data-dl-type="link-header" data-dl-title="Logo Rotas do Vazio">Rotas do Vazio</a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#rotas" data-dl-type="link-header" data-dl-title="Menu Rotas">Rotas</a>
+        <a href="#skips" data-dl-type="link-header" data-dl-title="Menu Skips">Skips</a>
+        <a href="#newsletter" class="btn" data-dl-type="botao-header" data-dl-title="Receber Newsletter">Receber newsletter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="topo">
+
+    <!-- ============================ HERO ============================ -->
+    <div class="hero">
+      <div class="wrap">
+        <h1>Atravesse Hallownest em minutos</h1>
+        <p>Rotas, skips e truques de movimento para quebrar seu recorde em Hollow Knight.</p>
+        <a href="#rotas" class="btn btn-solid" data-dl-type="botao" data-dl-title="Ver Rotas">Ver rotas</a>
+        <a href="#newsletter" class="btn" data-dl-type="botao" data-dl-title="Entrar na Newsletter">Entrar na newsletter</a>
+      </div>
+    </div>
+
+    <!-- ================== SERVIÇOS / DIFERENCIAIS ================== -->
+    <section id="rotas">
+      <div class="wrap">
+        <h2 class="section-title">Rotas para cada categoria</h2>
+        <p class="section-lead">Cada guia traz a ordem dos itens, os checkpoints e os erros mais comuns.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Any%</h3>
+            <p>A rota mais curta até um final. Foco em Garra de Louva-a-Deus, Dash da Sombra e skips de chefes.</p>
+            <a href="#newsletter" data-dl-type="link" data-dl-title="Guia Any%">Quero o guia</a>
+          </article>
+          <article class="card">
+            <h3>All Skills</h3>
+            <p>Todas as habilidades de movimento e combate, com ordem otimizada para evitar backtracking.</p>
+            <a href="#newsletter" data-dl-type="link" data-dl-title="Guia All Skills">Quero o guia</a>
+          </article>
+          <article class="card">
+            <h3>112% APB</h3>
+            <p>Conclusão completa com todos os chefes. Gerenciamento de Geo e de Alma em cada área.</p>
+            <a href="#newsletter" data-dl-type="link" data-dl-title="Guia 112 APB">Quero o guia</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skips" style="padding-top:0">
+      <div class="wrap">
+        <h2 class="section-title">Skips e técnicas</h2>
+        <p class="section-lead">Pequenos truques que economizam grandes trechos do mapa.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Pogo</h3>
+            <p>Golpe para baixo em espinhos e inimigos para ganhar altura e atravessar obstáculos.</p>
+            <a href="#newsletter" data-dl-type="link" data-dl-title="Skip Pogo">Aprender</a>
+          </article>
+          <article class="card">
+            <h3>Cdash</h3>
+            <p>Dash com Coração de Cristal usando paredes para ganhar impulso e cruzar salas inteiras.</p>
+            <a href="#newsletter" data-dl-type="link" data-dl-title="Skip Cdash">Aprender</a>
+          </article>
+          <article class="card">
+            <h3>Skips de Sombra</h3>
+            <p>Uso do Dash da Sombra para atravessar inimigos e portas em momentos precisos.</p>
+            <a href="#newsletter" data-dl-type="link" data-dl-title="Skip Sombra">Aprender</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FORMULÁRIO DE LEADS ===================== -->
+    <section id="newsletter" class="lead-section">
+      <div class="wrap">
+        <h2 class="section-title">Newsletter do Vazio</h2>
+        <p class="section-lead">Receba novas rotas, skips e atualizações da comunidade de speedrun.</p>
+
+        <!-- novalidate: a validação é feita via JS, para só disparar o dataLayer quando tudo estiver preenchido -->
+        <form id="lead-form" class="lead-form" novalidate>
+          <label>Nome
+            <input type="text" name="nome" autocomplete="name" required>
+          </label>
+          <label>E-mail
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label>Telefone
+            <input type="tel" name="telefone" autocomplete="tel" placeholder="(11) 91234-5678" required>
+          </label>
+          <!-- data-dl-type="submit": este botão NÃO dispara pelo listener de clique genérico;
+               o evento é disparado no handler do submit, apenas se o formulário for válido -->
+          <button type="submit" class="btn btn-solid" data-dl-type="submit" data-dl-title="Enviar Newsletter">Assinar newsletter</button>
+          <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Projeto pedagógico. Fã-site não oficial de Hollow Knight.</span>
+      <nav class="footer-links" aria-label="Rodapé">
+        <a href="#topo" data-dl-type="botao-footer" data-dl-title="Voltar ao Topo">Voltar ao topo</a>
+        <a href="https://www.speedrun.com/hollowknight" target="_blank" rel="noopener" data-dl-type="link-footer" data-dl-title="Ranking Speedrun.com">Ranking no Speedrun.com</a>
+        <a href="#newsletter" data-dl-type="link-footer" data-dl-title="Newsletter">Newsletter</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    /* =====================================================================
+       DATALAYER: LÓGICA GERAL
+       Padrão de evento (exato):
+         { event: 'clique', custom_section, custom_type, custom_title }
+
+       Como funciona:
+       1) sanitize(): padroniza qualquer texto (minúsculas, sem acentos,
+          sem caracteres especiais, espaços viram hífen).
+       2) pushClick(): monta o objeto, sanitiza os 3 valores e faz o push.
+       3) Listener de clique ÚNICO (delegação de eventos) no document:
+          captura cliques em qualquer <a> ou <button> da página.
+       4) O envio do formulário tem tratamento próprio (mais abaixo).
+       ===================================================================== */
+
+    window.dataLayer = window.dataLayer || [];
+
+    /* Nome da página (custom_section). Altere ao reutilizar em outras páginas. */
+    var PAGE_NAME = 'lp-home';
+
+    /* ---------- 1) SANITIZAÇÃO ----------
+       Exemplo: "Receber Newsletter!" -> "receber-newsletter"
+       Passos:
+         a) String(value)            -> garante texto
+         b) normalize('NFD')         -> separa letras dos acentos
+         c) replace(/[\u0300-\u036f]/g,'') -> remove os acentos
+         d) toLowerCase()            -> caixa baixa
+         e) replace(/[^a-z0-9]+/g,'-') -> tudo que não é letra/número vira hífen
+         f) replace(/^-+|-+$/g,'')   -> remove hífens nas pontas            */
+    function sanitize(value) {
+      return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    /* ---------- 2) PUSH PADRONIZADO ---------- */
+    function pushClick(type, title) {
+      var payload = {
+        'event': 'clique',
+        'custom_section': sanitize(PAGE_NAME),
+        'custom_type': sanitize(type),
+        'custom_title': sanitize(title)
+      };
+      window.dataLayer.push(payload);
+
+      /* [PEDAGÓGICO] Mostra cada push no console (F12) para conferir na hora. */
+      console.log('[DataLayer push]', payload);
+    }
+
+    /* ---------- 3) LISTENER GLOBAL DE CLIQUES ----------
+       closest('a, button') garante que o clique em um elemento filho
+       (ex.: <span> dentro do botão) também seja atribuído ao botão/link.
+       Valores vêm dos atributos:
+         data-dl-type  -> custom_type  (se ausente: 'link' para <a>, 'botao' para <button>)
+         data-dl-title -> custom_title (se ausente: texto visível do elemento)    */
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest('a, button');
+      if (!el) return;
+
+      /* Botão de submit: NÃO dispara aqui. O evento só deve sair se o
+         formulário estiver completo, o que é verificado no handler de 'submit'. */
+      if (el.type === 'submit') return;
+
+      var type = el.getAttribute('data-dl-type') || (el.tagName === 'A' ? 'link' : 'botao');
+      var title = el.getAttribute('data-dl-title') || el.textContent;
+      pushClick(type, title);
+    });
+
+    /* ---------- 4) FORMULÁRIO ----------
+       Regra: o dataLayer de envio SÓ dispara se TODOS os campos estiverem
+       preenchidos e válidos. Caso contrário, exibimos erro e não há push.   */
+    (function () {
+      var form = document.getElementById('lead-form');
+      var msg = document.getElementById('form-msg');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // evita recarregar a página
+
+        var nome = form.nome.value.trim();
+        var email = form.email.value.trim();
+        var telefone = form.telefone.value.replace(/\D/g, ''); // apenas dígitos
+
+        /* Validação de cada campo */
+        /* Regra do exercício: o evento só dispara se TODOS os campos estiverem
+           preenchidos (não vazios). Sem exigir formato específico de e-mail/telefone. */
+        var checks = [
+          { field: form.nome, ok: nome !== '' },
+          { field: form.email, ok: email !== '' },
+          { field: form.telefone, ok: telefone !== '' }
+        ];
+
+        var allValid = true;
+        checks.forEach(function (c) {
+          c.field.classList.toggle('invalid', !c.ok);
+          if (!c.ok) allValid = false;
+        });
+
+        if (!allValid) {
+          msg.className = 'form-msg error';
+          msg.textContent = 'Preencha todos os campos (nome, e-mail e telefone) para continuar.';
+          return; // <-- sai SEM disparar o dataLayer
+        }
+
+        /* Formulário válido: dispara o evento padrão com type 'submit'.
+           Nenhum dado pessoal (nome, e-mail, telefone) é enviado ao dataLayer. */
+        var btn = form.querySelector('[type="submit"]');
+        pushClick(btn.getAttribute('data-dl-type'), btn.getAttribute('data-dl-title'));
+
+        msg.className = 'form-msg ok';
+        msg.textContent = 'Inscrição confirmada. Bem-vindo ao Vazio!';
+        form.reset();
+      });
+    })();
+  </script>
+
+</body>
+<!-- =====================================================================
+     FIM DO </body>
+     ===================================================================== -->
+</html>
